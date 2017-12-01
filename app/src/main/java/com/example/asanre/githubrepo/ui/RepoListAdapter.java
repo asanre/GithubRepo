@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.asanre.githubrepo.R;
 import com.example.asanre.githubrepo.domain.model.IRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -25,6 +26,7 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
     public RepoListAdapter(Context context) {
 
         this.context = context;
+        repositories = new ArrayList<>();
     }
 
     @Override
@@ -54,6 +56,12 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
     public int getItemCount() {
 
         return repositories == null ? 0 : repositories.size();
+    }
+
+    public void addRepositories(List<IRepository> repoList) {
+
+        this.repositories.addAll(repoList);
+        notifyDataSetChanged();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

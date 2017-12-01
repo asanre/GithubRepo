@@ -6,7 +6,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.asanre.githubrepo.R;
+import com.example.asanre.githubrepo.domain.model.IRepository;
 import com.example.asanre.githubrepo.ui.base.BaseFragment;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -53,5 +56,11 @@ public class RepoListFragment extends BaseFragment implements RepoListView {
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void setAdapterData(List<IRepository> repositories) {
+
+        adapter.addRepositories(repositories);
     }
 }
