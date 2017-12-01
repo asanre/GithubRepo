@@ -13,11 +13,13 @@ public class RepoListPresenter extends BasePresenter {
     private final RepoListView view;
     private final GetRepositories getRepositories;
     private int currentPage;
+    private boolean isLastPage;
 
     public RepoListPresenter(RepoListView view) {
 
         this.view = view;
         currentPage = 1;
+        isLastPage = false;
         getRepositories = new GetRepositories();
     }
 
@@ -30,6 +32,13 @@ public class RepoListPresenter extends BasePresenter {
     public void loadRepos() {
 
         fetchRepos(currentPage);
+    }
+
+    public void loadMore() {
+
+        if (!isLastPage) {
+            fetchRepos(++currentPage);
+        }
     }
 
     private void fetchRepos(int page) {
@@ -57,8 +66,12 @@ public class RepoListPresenter extends BasePresenter {
 
     void onSuccessHandler(List<IRepository> repositories) {
 
-        view.setAdapterData(repositories);
-        view.hideLoading();
+        if (repositories.isEmpty()) {
+            isLastPage = true;
+        } else {
+            view.setAdapterData(repositories);
+            view.hideLoading();
+        }
 
     }
 

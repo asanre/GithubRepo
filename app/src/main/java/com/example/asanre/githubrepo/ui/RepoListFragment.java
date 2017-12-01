@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import com.example.asanre.githubrepo.R;
 import com.example.asanre.githubrepo.domain.model.IRepository;
 import com.example.asanre.githubrepo.ui.base.BaseFragment;
+import com.example.asanre.githubrepo.ui.utils.AppUtils;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class RepoListFragment extends BaseFragment implements RepoListView {
     protected void prepareView(View view) {
 
         setUpRecycler();
+        setScrollListener();
         presenter = new RepoListPresenter(this);
         presenter.loadRepos();
     }
@@ -49,6 +51,12 @@ public class RepoListFragment extends BaseFragment implements RepoListView {
         loading.setVisibility(View.GONE);
     }
 
+    @Override
+    public void setAdapterData(List<IRepository> repositories) {
+
+        adapter.addRepositories(repositories);
+    }
+
     private void setUpRecycler() {
 
         adapter = new RepoListAdapter(getActivity());
@@ -58,9 +66,17 @@ public class RepoListFragment extends BaseFragment implements RepoListView {
         recyclerView.setAdapter(adapter);
     }
 
-    @Override
-    public void setAdapterData(List<IRepository> repositories) {
+    private void setScrollListener() {
 
-        adapter.addRepositories(repositories);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+
+                if (AppUtils.pageEndlessDetect(recyclerView)) {
+                    presenter.loadMore();
+                }
+            }
+        });
     }
 }
