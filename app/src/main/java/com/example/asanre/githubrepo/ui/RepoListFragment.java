@@ -2,6 +2,7 @@ package com.example.asanre.githubrepo.ui;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -14,7 +15,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class RepoListFragment extends BaseFragment implements RepoListView {
+public class RepoListFragment extends BaseFragment
+        implements RepoListView, RepoListAdapter.AdapterOnClickListener {
 
     @BindView(R.id.rv_repositories)
     RecyclerView recyclerView;
@@ -57,9 +59,15 @@ public class RepoListFragment extends BaseFragment implements RepoListView {
         adapter.addRepositories(repositories);
     }
 
+    @Override
+    public void onLongClick(IRepository repository) {
+
+        Log.d("", "");
+    }
+
     private void setUpRecycler() {
 
-        adapter = new RepoListAdapter(getActivity());
+        adapter = new RepoListAdapter(getActivity(), this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),
                 LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);

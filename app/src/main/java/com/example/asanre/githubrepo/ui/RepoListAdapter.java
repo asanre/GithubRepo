@@ -17,15 +17,18 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnLongClick;
 
 public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHolder> {
 
     private final Context context;
     private List<IRepository> repositories;
+    private final AdapterOnClickListener listener;
 
-    public RepoListAdapter(Context context) {
+    public RepoListAdapter(Context context, AdapterOnClickListener listener) {
 
         this.context = context;
+        this.listener = listener;
         repositories = new ArrayList<>();
     }
 
@@ -64,6 +67,11 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    public interface AdapterOnClickListener {
+
+        void onLongClick(IRepository repository);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.rl_container)
@@ -79,6 +87,13 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
 
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        @OnLongClick(R.id.rl_container)
+        boolean onLongClick() {
+
+            listener.onLongClick(repositories.get(getAdapterPosition()));
+            return true;
         }
     }
 }
