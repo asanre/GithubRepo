@@ -8,8 +8,10 @@ import com.example.asanre.githubrepo.data.model.RepoEntity;
 import com.example.asanre.githubrepo.data.model.ServiceRepo;
 import com.example.asanre.githubrepo.data.restService.ApiService;
 import com.example.asanre.githubrepo.data.restService.RestClient;
+import com.example.asanre.githubrepo.domain.RepoParams;
 import com.example.asanre.githubrepo.domain.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Single;
@@ -39,7 +41,7 @@ public class DataRepository implements Repository {
     }
 
     /**
-     * fetch repos from github if success save it on db onError
+     * fetch repos from github if success save it on db
      * but on error fetch from cached
      *
      * @param page int
@@ -48,8 +50,8 @@ public class DataRepository implements Repository {
     @Override
     public Single<List<RepoEntity>> getRepos(final int page) {
 
-        return Single.zip(retrieveReposAndSaveOnSuccess(page), githubDao.getReposByPage(page),
-                (apiRepo, dbRepo) -> {
+        return Single.zip(retrieveReposAndSaveOnSuccess(page).onErrorReturnItem(new ArrayList<>()),
+                githubDao.getReposByPage(page), (apiRepo, dbRepo) -> {
 
                     if (apiRepo.isEmpty()) {
                         return dbRepo;
@@ -60,15 +62,15 @@ public class DataRepository implements Repository {
 
     private Single<List<RepoEntity>> retrieveReposAndSaveOnSuccess(int page) {
 
-        return getCloudRepos(page).map(serviceRepos -> DataMapper.mapToEntity(serviceRepos, page))
+        return getCloudRepos(new RepoParams(page)).map(
+                serviceRepos -> DataMapper.mapToEntity(serviceRepos, page))
                 .doOnSuccess(this::saveOnDB);
     }
 
-    private Single<List<ServiceRepo>> getCloudRepos(int page) {
+    private Single<List<ServiceRepo>> getCloudRepos(RepoParams params) {
 
-        final String user = "xing";
-        final int reposPerPage = 10;
-        return apiService.getUserRepos(user, reposPerPage, page);
+        return apiService.getUserRepos(params.getUser(), params.getReposPerPage(),
+                params.getPage());
     }
 
     private void saveOnDB(List<RepoEntity> repoEntities) {
