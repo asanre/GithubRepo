@@ -25,3 +25,16 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    stethoVersion = '1.5.0'
+    gsonVersion = '2.8.1'
+    retrofitVersion = '2.3.0'
+    butterknife = '8.8.1'
+    supportVersion = '26.1.0'
+    archVersion = '1.0.0'
+    modelmapperVersion = '1.1.0'
+    rxJava = '2.1.7'
+    rxAndroid = '2.0.1'
+    rxAdapter = '2.3.0'
+}
