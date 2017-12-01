@@ -8,32 +8,32 @@ import com.example.asanre.githubrepo.data.model.RepoEntity;
 import com.example.asanre.githubrepo.data.model.ServiceRepo;
 import com.example.asanre.githubrepo.data.restService.ApiService;
 import com.example.asanre.githubrepo.data.restService.RestClient;
+import com.example.asanre.githubrepo.domain.DataSource;
 import com.example.asanre.githubrepo.domain.RepoParams;
-import com.example.asanre.githubrepo.domain.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Single;
 
-public class DataRepository implements Repository {
+public class DataProvider implements DataSource {
 
     private final GithubDao githubDao;
     private final ApiService apiService;
-    private static DataRepository sInstance;
+    private static DataProvider sInstance;
 
-    public DataRepository(Context context) {
+    public DataProvider(Context context) {
 
         this.githubDao = GithubDb.getInstance(context).getGithubDao();
         this.apiService = RestClient.getService();
     }
 
-    public static DataRepository getInstance(Context context) {
+    public static DataProvider getInstance(Context context) {
 
         if (sInstance == null) {
-            synchronized (DataRepository.class) {
+            synchronized (DataProvider.class) {
                 if (sInstance == null) {
-                    sInstance = new DataRepository(context);
+                    sInstance = new DataProvider(context);
                 }
             }
         }
