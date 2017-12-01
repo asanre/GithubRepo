@@ -1,7 +1,9 @@
-package com.example.asanre.githubrepo;
+package com.example.asanre.githubrepo.ui;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.example.asanre.githubrepo.R;
 
 public class RepoListActivity extends AppCompatActivity {
 
