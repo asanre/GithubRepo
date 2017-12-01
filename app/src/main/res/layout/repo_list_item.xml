@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="3dp"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:id="@+id/rl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextStyle.H1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Repo Name" />
+
+        <TextView
+            android:id="@+id/tv_owner"
+            style="@style/TextStyle.H4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            tools:text="Xing" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            style="@style/TextStyle.H4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_owner"
+            android:layout_marginTop="10dp"
+            tools:text="because you need another a key/value storage engine" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
