@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DataMapper {
 
-    public static List<RepoEntity> map(List<ServiceRepo> serviceRepos, int page) {
+    public static List<RepoEntity> mapToEntity(List<ServiceRepo> serviceRepos, int page) {
 
         ModelMapper mapper = new ModelMapper();
         List<RepoEntity> repoEntities = new ArrayList<>();

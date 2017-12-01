@@ -17,6 +17,10 @@ public class RepoEntity {
     private String ownerUrl;
     private int page;
 
+    public RepoEntity() {
+
+    }
+
     public RepoEntity(int id, String name, String description, String repoUrl, boolean fork,
                       String ownerLogin, String ownerUrl, int page) {
 
