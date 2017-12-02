@@ -11,6 +11,7 @@ import com.example.asanre.githubrepo.data.restService.RestClient;
 import com.example.asanre.githubrepo.domain.DataSource;
 import com.example.asanre.githubrepo.domain.RepoParams;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class DataProvider implements DataSource {
 
     /**
      * fetch repos from github if success save it on db
-     * but on error fetch from cached
+     * but on network exception error fetch from cached
      *
      * @param page int
      * @return list of repo entities
@@ -50,14 +51,19 @@ public class DataProvider implements DataSource {
     @Override
     public Single<List<RepoEntity>> getRepos(final int page) {
 
-        return Single.zip(retrieveReposAndSaveOnSuccess(page).onErrorReturnItem(new ArrayList<>()),
-                githubDao.getReposByPage(page), (apiRepo, dbRepo) -> {
+        return Single.zip(retrieveReposAndSaveOnSuccess(page).onErrorResumeNext(throwable -> {
 
-                    if (apiRepo.isEmpty()) {
-                        return dbRepo;
-                    }
-                    return apiRepo;
-                });
+            if (throwable instanceof UnknownHostException) {
+                return Single.just(new ArrayList<>());
+            }
+            return Single.error(throwable);
+        }), githubDao.getReposByPage(page), (apiRepo, dbRepo) -> {
+
+            if (apiRepo.isEmpty()) {
+                return dbRepo;
+            }
+            return apiRepo;
+        });
     }
 
     private Single<List<RepoEntity>> retrieveReposAndSaveOnSuccess(int page) {

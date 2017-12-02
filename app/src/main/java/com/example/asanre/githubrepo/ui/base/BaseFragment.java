@@ -2,6 +2,7 @@ package com.example.asanre.githubrepo.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static android.support.design.widget.Snackbar.LENGTH_LONG;
 
 public abstract class BaseFragment extends Fragment implements BaseView {
 
@@ -57,6 +60,9 @@ public abstract class BaseFragment extends Fragment implements BaseView {
     @Override
     public void showErrorMessage(String errorMessage) {
 
+        if (getView() != null) {
+            Snackbar.make(getView(), errorMessage, LENGTH_LONG).show();
+        }
     }
 
     @Override

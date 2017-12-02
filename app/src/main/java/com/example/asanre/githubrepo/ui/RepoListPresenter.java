@@ -78,7 +78,7 @@ public class RepoListPresenter extends BasePresenter {
             public void onError(Throwable error) {
 
                 if (isViewAlive()) {
-                    onErrorHandler(error.getMessage());
+                    onErrorHandler(error.getLocalizedMessage());
                 }
             }
         }, page);
