@@ -34,11 +34,17 @@ public class RepoListPresenter extends BasePresenter {
         return view;
     }
 
+    /**
+     * first repositories on page one
+     */
     void loadRepos() {
 
         fetchRepos(currentPage);
     }
 
+    /**
+     * paginate on repositories
+     */
     void loadMore() {
 
         if (!isLastPage) {
@@ -46,6 +52,11 @@ public class RepoListPresenter extends BasePresenter {
         }
     }
 
+    /**
+     * save clicked repository and show dialog
+     *
+     * @param repository clicked repository on adapter
+     */
     void onRepoLongClicked(IRepository repository) {
 
         this.repositoryClicked = repository;
@@ -53,6 +64,11 @@ public class RepoListPresenter extends BasePresenter {
 
     }
 
+    /**
+     * get url for option selected and navigate to page
+     *
+     * @param position option selected on menu dialog
+     */
     void onOptionSelected(int position) {
 
         String url = options[position].equals(REPO.getValue())
