@@ -8,12 +8,17 @@ import com.example.asanre.githubrepo.ui.base.BaseView;
 
 import java.util.List;
 
+import static com.example.asanre.githubrepo.ui.utils.DialogOptions.OWNER;
+import static com.example.asanre.githubrepo.ui.utils.DialogOptions.REPO;
+
 public class RepoListPresenter extends BasePresenter {
 
     private final RepoListView view;
     private final GetRepositories getRepositories;
     private int currentPage;
     private boolean isLastPage;
+    private IRepository repositoryClicked;
+    private CharSequence options[] = new CharSequence[]{REPO.getValue(), OWNER.getValue()};
 
     public RepoListPresenter(RepoListView view) {
 
@@ -29,16 +34,31 @@ public class RepoListPresenter extends BasePresenter {
         return view;
     }
 
-    public void loadRepos() {
+    void loadRepos() {
 
         fetchRepos(currentPage);
     }
 
-    public void loadMore() {
+    void loadMore() {
 
         if (!isLastPage) {
             fetchRepos(++currentPage);
         }
+    }
+
+    void onRepoLongClicked(IRepository repository) {
+
+        this.repositoryClicked = repository;
+        view.showDialog(options);
+
+    }
+
+    void onOptionSelected(int position) {
+
+        String url = options[position].equals(REPO.getValue())
+                     ? repositoryClicked.getRepoUrl()
+                     : repositoryClicked.getOwnerUrl();
+        view.navigateToPage(url);
     }
 
     private void fetchRepos(int page) {

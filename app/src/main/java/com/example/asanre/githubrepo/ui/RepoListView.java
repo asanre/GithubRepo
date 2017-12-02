@@ -8,4 +8,8 @@ import java.util.List;
 public interface RepoListView extends BaseView {
 
     void setAdapterData(List<IRepository> repositories);
+
+    void showDialog(CharSequence[] options);
+
+    void navigateToPage(String url);
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GithubRepo</string>
+    <string name="dialog_title">Which page do you wanna go?</string>
 </resources>
