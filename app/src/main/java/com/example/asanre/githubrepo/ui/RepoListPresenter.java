@@ -103,11 +103,14 @@ public class RepoListPresenter extends BasePresenter {
     void onSuccessHandler(List<IRepository> repositories) {
 
         if (repositories.isEmpty()) {
-            isLastPage = true;
+            if (currentPage > 1) {
+                isLastPage = true;
+            }
         } else {
             view.setAdapterData(repositories);
-            view.hideLoading();
         }
+
+        view.hideLoading();
 
     }
 
