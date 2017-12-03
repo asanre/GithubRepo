@@ -11,11 +11,16 @@
     <style name="TextStyle" />
 
     <style name="TextStyle.H1">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="TextStyle.H4">
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="TextStyle.H3">
+        <item name="android:textSize">12sp</item>
         <item name="android:lineSpacingMultiplier">1.30</item>
     </style>
 

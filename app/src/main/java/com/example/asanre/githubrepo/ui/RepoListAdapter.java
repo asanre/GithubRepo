@@ -50,7 +50,7 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
         holder.tvRepoDescription.setText(currentRepo.getDescription());
 
         final int color = ContextCompat.getColor(context,
-                currentRepo.hasFork() ? R.color.light_green : R.color.white);
+                currentRepo.hasFork() ? R.color.white : R.color.light_green);
         holder.rlContainer.setBackgroundColor(color);
 
     }
