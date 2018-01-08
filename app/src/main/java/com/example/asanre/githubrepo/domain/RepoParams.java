@@ -2,10 +2,11 @@ package com.example.asanre.githubrepo.domain;
 
 /**
  * create a repo params to leave the possibilities to fetch repos from other users
+ * and select amount per page
  */
 public class RepoParams {
 
-    private final String user = "xing";
+    private final String user = "asanre";
     private final int reposPerPage = 10;
     private final int page;
 

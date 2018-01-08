@@ -5,17 +5,13 @@ import com.example.asanre.githubrepo.domain.model.IRepository;
 
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.Single;
 
-public class GetRepositories implements UseCase<List<IRepository>, Integer> {
+public class GetRepositories implements UseCase<Single<List<IRepository>>, Integer> {
 
     @Override
-    public void execute(BaseObserver<List<IRepository>> observer, Integer page) {
+    public Single<List<IRepository>> execute(Integer page) {
 
-        Provider.getRepositories(page)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+        return Provider.getInstance().getRepositories(page);
     }
 }

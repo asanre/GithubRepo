@@ -8,6 +8,9 @@ import com.example.asanre.githubrepo.ui.base.BaseView;
 
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 import static com.example.asanre.githubrepo.ui.utils.DialogOptions.OWNER;
 import static com.example.asanre.githubrepo.ui.utils.DialogOptions.REPO;
 
@@ -80,24 +83,27 @@ public class RepoListPresenter extends BasePresenter {
     private void fetchRepos(int page) {
 
         view.showLoading();
-        getRepositories.execute(new BaseObserver<List<IRepository>>() {
+        getRepositories.execute(page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseObserver<List<IRepository>>() {
 
-            @Override
-            public void onSuccess(List<IRepository> repositories) {
+                    @Override
+                    public void onSuccess(List<IRepository> repositories) {
 
-                if (isViewAlive()) {
-                    onSuccessHandler(repositories);
-                }
-            }
+                        if (isViewAlive()) {
+                            onSuccessHandler(repositories);
+                        }
+                    }
 
-            @Override
-            public void onError(Throwable error) {
+                    @Override
+                    public void onError(Throwable error) {
 
-                if (isViewAlive()) {
-                    onErrorHandler(error.getLocalizedMessage());
-                }
-            }
-        }, page);
+                        if (isViewAlive()) {
+                            onErrorHandler(error.getLocalizedMessage());
+                        }
+                    }
+                });
     }
 
     void onSuccessHandler(List<IRepository> repositories) {
