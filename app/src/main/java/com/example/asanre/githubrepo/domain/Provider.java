@@ -11,14 +11,27 @@ import io.reactivex.Single;
 
 public class Provider {
 
-    private static DataSource dataSource;
+    private DataSource dataSource;
+    private static Provider sInstance;
 
-    public static void init(Context context) {
+    public static Provider getInstance() {
 
-        dataSource = DataProvider.getInstance(context);
+        if (sInstance == null) {
+            synchronized (DataProvider.class) {
+                if (sInstance == null) {
+                    sInstance = new Provider();
+                }
+            }
+        }
+        return sInstance;
     }
 
-    public static Single<List<IRepository>> getRepositories(int page) {
+    public void init(Context context) {
+
+        this.dataSource = DataProvider.getInstance(context);
+    }
+
+    public Single<List<IRepository>> getRepositories(int page) {
 
         return dataSource.getRepos(page).map(DomainMapper::map);
     }

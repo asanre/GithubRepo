@@ -23,7 +23,7 @@ public class DataProvider implements DataSource {
     private final ApiService apiService;
     private static DataProvider sInstance;
 
-    public DataProvider(Context context) {
+    private DataProvider(Context context) {
 
         this.githubDao = GithubDb.getInstance(context).getGithubDao();
         this.apiService = RestClient.getService();
